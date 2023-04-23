@@ -6,6 +6,9 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -17,20 +20,20 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
-    
+
         // Create a new user model
-        $user = new User();
-        $user->first_name = $validatedData['first_name'];
-        $user->last_name = $validatedData['last_name'];
-        $user->number = $validatedData['number'];
-        $user->email = $validatedData['email'];
-        $user->password = bcrypt($validatedData['password']);
-    
+        $user = User::create([
+            'first_name' => $validatedData['first_name'],
+            'last_name' => $validatedData['last_name'],
+            'number' => $validatedData['number'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+        ]);
+
         // Assign a default role to the user
         $role = Role::where('name', 'registered_role')->first();
         $user->roles()->attach($role);
-        $user->save();
-    
+
         return redirect('/auth/login')->with('success', 'User created successfully!');
     }
 
@@ -56,10 +59,38 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
     public function profile()
     {
         $user = Auth::user();
         return view('user.profile', compact('user'));
-    }
-}
+    } 
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
 
+        $validatedData = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'number' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'new_password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        ]);
+        
+        $user = User::find($user->id);
+        
+        if (array_key_exists('new_password', $validatedData) && $validatedData['new_password'] != null) {
+            $user->password = Hash::make($validatedData['new_password']);
+        }
+        
+        unset($validatedData['new_password']);
+        
+        $user->fill($validatedData)->save(); // use fill() method to update all attributes, including password
+        
+        return redirect()->back()->with('success', 'Profile updated successfully!');        
+    }
+    
+    
+    
+
+}

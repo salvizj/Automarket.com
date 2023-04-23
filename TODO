@@ -1,6 +1,6 @@
-STRĀDA REGISTER, LOGIN, LOGOUT, Add car, kur tiek savots dati DB 
+Paveiktais: Register/Login/Logout/Profile rāda data/Profule edit updator data(nestrādā ar password, bet strāda ar pārējo)
 
 GOALS :
 displayot visus lists
 filtrēt lists
-updatot db user profile info ar edit
+

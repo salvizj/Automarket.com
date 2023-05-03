@@ -1,6 +1,4 @@
-Paveiktais: Register/Login/Logout/Profile rāda data/Profule edit updator data(nestrādā ar password, bet strāda ar pārējo)
-
-GOALS :
-displayot visus lists
-filtrēt lists
-
+TO DO :
+Jāsataisa FILTRS 
+Jāieliek tā jaunā tabula, kas skaita kliķškus un jāpieliek pie myshow un show colunam
+Jiazveido admin roles

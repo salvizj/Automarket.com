@@ -24,12 +24,10 @@ class CreateCarListingsTable extends Migration
             $table->string('image')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-
             $table->index(['make', 'model', 'transmission', 'year']);
         });
     }
-
-    /**
+    /*  *
      * Reverse the migrations.
      *
      * @return void

@@ -64,7 +64,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         return view('user.profile', compact('user'));
-    } 
+    }
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
@@ -73,24 +73,27 @@ class UserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'number' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'new_password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => ['nullable', 'string', 'min:8'],
+            'new_password' => ['nullable', 'string', 'min:8'],
         ]);
-        
+
+
         $user = User::find($user->id);
-        
-        if (array_key_exists('new_password', $validatedData) && $validatedData['new_password'] != null) {
+
+        if ($validatedData['new_password']) {
             $user->password = Hash::make($validatedData['new_password']);
         }
-        
+
         unset($validatedData['new_password']);
-        
+
         $user->fill($validatedData)->save(); // use fill() method to update all attributes, including password
-        
-        return redirect()->back()->with('success', 'Profile updated successfully!');        
+        return redirect()->back()->with('success', 'Profile updated successfully!');
     }
-    
-    
-    
+
+
+
+
+
 
 }

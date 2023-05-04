@@ -4,49 +4,56 @@ namespace App\Http\Controllers;
 
 use App\Models\CarListing;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
 
 class CarController extends Controller
 {
-    public function create(): View
+public function create(): View
     {
         return view('cars.create');
     }
-
     public function store(Request $request): RedirectResponse
-    {
-        $validatedData = $request->validate([
-            'make' => 'required|string|max:255',
-            'model' => 'required|string|max:255',
-            'transmission' => 'required|string|max:255',
-            'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'distance' => 'required|integer|min:0',
-            'price' => 'required|numeric|min:0',
-            'comments' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-        ]);
+{
+    $validatedData = $request->validate([
+        'make' => 'required|string|max:255',
+        'model' => 'required|string|max:255',
+        'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
+        'engine' => 'required|string|max:255',
+        'transmission' => 'required|string|max:255',
+        'cylinders' => 'required|integer|min:0',
+        'drive' => 'required|string|max:255',
+        'distance' => 'required|integer|min:0',
+        'price' => 'required|numeric|min:0',
+        'comments' => 'nullable|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $carListing = new CarListing();
-        $carListing->make = $validatedData['make'];
-        $carListing->model = $validatedData['model'];
-        $carListing->transmission = $validatedData['transmission'];
-        $carListing->year = $validatedData['year'];
-        $carListing->distance = $validatedData['distance'];
-        $carListing->price = $validatedData['price'];
-        $carListing->comments = $validatedData['comments'];
-        $carListing->user_id = Auth::id();
+    $carListing = new CarListing();
+    $carListing->make = $validatedData['make'];
+    $carListing->model = $validatedData['model'];
+    $carListing->year = $validatedData['year'];
+    $carListing->engine = $validatedData['engine'];
+    $carListing->transmission = $validatedData['transmission'];
+    $carListing->cylinders = $validatedData['cylinders'];
+    $carListing->drive = $validatedData['drive'];
+    $carListing->distance = $validatedData['distance'];
+    $carListing->price = $validatedData['price'];
+    $carListing->comments = $validatedData['comments'];
+    $carListing->user_id = Auth::id();
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imagePath = $image->store('public/car_images');
-        }
-        $carListing->save();
-
-        return redirect()->route('cars.myshow')->with('success', 'Car Listing created successfully!');
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imagePath = $image->store('public/car_images');
+        $carListing->image = $imagePath;
     }
+    $carListing->save();
+
+
+    return redirect()->route('cars.myshow', $carListing->id)->with('success', 'Car Listing created successfully!');
+}
+
     public function show()
     {
         $listings = CarListing::all();
@@ -67,46 +74,71 @@ class CarController extends Controller
 
 
 
-    public function view($carlisting)
-    {
-        $car = CarListing::with('user')->find($carlisting);
-        return view('cars.view', compact('car'));
-    }
+public function view($carlisting)
+{
+    // Find the CarListing model instance by ID
+    $car = CarListing::findOrFail($carlisting);
+
+    // Increment the view count and save the model
+    $car->view_count++;
+    $car->save();
+
+    // Load the user relationship
+    $car->load('user');
+
+    // Return the view with the car data
+    return view('cars.view', compact('car'));
+}
+
 
     public function filter(Request $request)
-    {
-        $listings = CarListing::query();
+{
+    $listings = CarListing::query();
 
-        // add filters to the query
-        if ($request->has('make')) {
-            $listings->where('make', $request->make);
-        }
-        if ($request->has('model')) {
-            $listings->where('model', $request->model);
-        }
-        if ($request->has('transmission')) {
-            $listings->where('transmission', $request->transmission);
-        }
-        if ($request->has('year')) {
-            $listings->where('year', $request->year);
-        }
-        if ($request->has('price_min')) {
-            $listings->where('price', '>=', (float) $request->price_min);
-        }
-        if ($request->has('price_max')) {
-            $listings->where('price', '<=', (float) $request->price_max);
-        }
-
-        // exclude user's own listings if user is logged in
-        if (auth()->check()) {
-            $listings->where('user_id', '<>', auth()->id());
-        }
-
-        // get filtered listings
-        $listings = $listings->get();
-
-        return view('cars.show', compact('listings'));
+    // add filters to the query
+    if ($request->filled('make')) {
+        $listings->where('make', $request->make);
     }
+    if ($request->filled('model')) {
+        $listings->where('model', $request->model);
+    }
+        if ($request->filled('from_year')) {
+        $listings->where('year','>=', $request->from_year);
+    }
+    if ($request->filled('till_year')) {
+        $listings->where('year','<=', $request->till_year);
+    }
+    if ($request->filled('engine')) {
+        $listings->where('engine', $request->engine);
+    }
+        if ($request->filled('transmission')) {
+        $listings->where('transmission', $request->transmission);
+    }
+            if ($request->filled('cylinders')) {
+        $listings->where('cylinders', $request->cylinders);
+    }
+            if ($request->filled('drive')) {
+        $listings->where('drive', $request->drive);
+    }
+    if ($request->filled('price_min')) {
+        $listings->where('price', '>=', (float) $request->price_min);
+    }
+    if ($request->filled('price_max')) {
+        $listings->where('price', '<=', (float) $request->price_max);
+    }
+
+    // exclude user's own listings if user is logged in
+    if (auth()->check()) {
+        $listings->where('user_id', '<>', auth()->id());
+    }
+
+    // get filtered listings
+    $listings = $listings->get();
+
+return view('cars.show', compact('listings'));
+}
+
+
     public function update(Request $request, $id)
     {
         $car = CarListing::findOrFail($id);

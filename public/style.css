@@ -1,0 +1,66 @@
+html {
+    background-color: #f1f6f9;
+}
+main {
+    background-color: #f1f6f9;
+}
+main > div,
+main > form {
+    padding-top: 10vh;
+}
+footer {
+    background-color: #f1f6f9;
+}
+#create-submit-btn {
+    margin-top: 2em;
+}
+* {
+    margin: 0;
+}
+header {
+    background-color: #212a3e;
+    padding: 1em;
+}
+header a:hover {
+    transform: scale(1.05);
+    transition: 0.1s;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    color: #394867;
+}
+.btn {
+    background-color: #212a3e;
+    border-color: transparent;
+}
+.btn:hover {
+    background-color: #9ba4b5;
+    border-color: transparent;
+}
+#home-page-main,
+#myshow-main-page {
+    padding-top: 30vh;
+}
+#modalSignin {
+    padding-top: 10vh;
+}
+.create-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#edit-picture {
+    background-color: #f1f6f9;
+    max-width: fit-content;
+    margin-left: 6em;
+}
+#edit-picture,
+#edit-price,
+#edit-distance {
+    display: none;
+}

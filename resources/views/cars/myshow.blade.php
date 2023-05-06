@@ -69,7 +69,7 @@
                             <tr>
                                 <td>
                                     @if ($listing->image)
-                                        <img src="{{ asset('storage/car_images/' . $listing->image) }}" alt="Car Image" style="max-width: 100px">
+                                        <img src="{{ asset('storage/' . Str::after($listing->image, 'public/')) }}" alt="Car Image" style="max-width: 100px">
                                     @else
                                         <img src="{{ asset('storage/car_images/default.png') }}" alt="Car Image" style="max-width: 100px">
                                     @endif

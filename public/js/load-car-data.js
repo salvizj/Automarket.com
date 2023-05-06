@@ -151,7 +151,9 @@ $(document).ready(function () {
         var selectedModel = $("#model").children("option:selected").val();
         var selectedYear = $("#year").children("option:selected").val();
         var selectedEngine = $("#engine").children("option:selected").val();
-        var selectedTransmission = $("#transmission").children("option:selected").val();
+        var selectedTransmission = $("#transmission")
+            .children("option:selected")
+            .val();
         var selectedCylinders = $(this).children("option:selected").val();
         console.log(selectedCylinders);
 

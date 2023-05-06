@@ -36,8 +36,8 @@ Route::middleware(['web'])->group(function () {
         return view('user.profile');
     });
 
-Route::get('/cars/create', [CarController::class, 'create'])->name('cars.create');
-Route::post('/cars/create', [CarController::class, 'store'])->name('cars.store');
+    Route::get('/cars/create', [CarController::class, 'create'])->name('cars.create');
+    Route::post('/cars/create', [CarController::class, 'store'])->name('cars.store');
     Route::get('/cars/show', [CarController::class, 'show'])->name('cars.show');
     Route::get('/cars/myshow', [CarController::class, 'myshow'])->name('cars.myshow');
     Route::get('/cars/view/{id}', [CarController::class, 'view'])->name('cars.view');

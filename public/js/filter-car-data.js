@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    // Populate car makes dropdown
     var makeDropdown = $("#make");
     var makeURL =
         "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=make&rows=0";
@@ -20,21 +19,20 @@ $(document).ready(function () {
             );
         });
     });
-var fromYearDropdown = $("#from_year");
-var tillYearDropdown = $("#till_year");
-var yearURL =
-    "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=year&rows=0";
-$.getJSON(yearURL, function (data) {
-    $.each(data["facet_groups"][0]["facets"], function (index, value) {
-        fromYearDropdown.append(
-            $("<option>").text(value["name"]).attr("value", value["name"])
-        );
-        tillYearDropdown.append(
-            $("<option>").text(value["name"]).attr("value", value["name"])
-        );
+    var fromYearDropdown = $("#from_year");
+    var tillYearDropdown = $("#till_year");
+    var yearURL =
+        "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=year&rows=0";
+    $.getJSON(yearURL, function (data) {
+        $.each(data["facet_groups"][0]["facets"], function (index, value) {
+            fromYearDropdown.append(
+                $("<option>").text(value["name"]).attr("value", value["name"])
+            );
+            tillYearDropdown.append(
+                $("<option>").text(value["name"]).attr("value", value["name"])
+            );
+        });
     });
-});
-
 
     var engineDropdown = $("#engine");
     var engineURL =

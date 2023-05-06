@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         @if ($car->image)
-                            <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->title }} class="mx-auto d-block" style="max-width: 80%">
+                            <img src="{{ asset('storage/' . Str::after($car->image, 'public/')) }}" alt="Car Image" class="mx-auto d-block" style="max-width: 80%">
                         @else
                             <img src="{{ asset('storage/car_images/default.png') }}" alt="Default Image" class="mx-auto d-block" style="max-width: 80%">
                         @endif

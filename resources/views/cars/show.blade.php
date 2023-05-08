@@ -137,7 +137,7 @@
                 </table>
             </form>
         </div>
-        <div class="col-md-9 mx-auto">
+        <div class="col-md-10 mx-auto">
             @if ($listings != null && $listings->count() > 0)
                 <h1>ALL Listings</h1>
                 <table class="table table-striped">
@@ -179,13 +179,23 @@
                                     <td>{{ $listing->price }}</td>
                                     <td>{{ $listing->view_count }}</td>
                                     <td>
-                                        <a href="{{ route('cars.view', $listing->id) }}" class="btn btn-primary">View</a>
-                                    </td>
-                                </tr>
+                                        <div class="btn-group">
+                                            <a href="{{ route('cars.view', $listing->id) }}" class="btn btn-primary m-1 rounded">View</a>
+                                            @if (Auth::check() &&
+                                                    Auth::user()->roles()->where('name', 'admin')->exists())
+                                                <form action="{{ route('cars.listingdestroy', $listing->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button id="deleteForm" class="btn btn-primary m-1 rounded" type="submit">Delete</button>
+                                                </form>
+                                        </div>
                             @endif
-                        @endforeach
-                    </tbody>
-                </table>
+                            </td>
+                            </tr>
+                        @endif
+            @endforeach
+            </tbody>
+            </table>
             @endif
         </div>
         <footer>

@@ -1,77 +1,101 @@
-$(document).ready(function () {
-    var makeDropdown = $("#make");
-    var makeURL =
+document.addEventListener("DOMContentLoaded", function () {
+    const makeDropdown = document.getElementById("make");
+    const makeURL =
         "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=make&rows=0";
-    $.getJSON(makeURL, function (data) {
-        $.each(data["facet_groups"][0]["facets"], function (index, value) {
-            makeDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
+    fetch(makeURL)
+        .then((response) => response.json())
+        .then((data) => {
+            data["facet_groups"][0]["facets"].forEach(function (value) {
+                const option = document.createElement("option");
+                option.text = value["name"];
+                option.value = value["name"];
+                makeDropdown.add(option);
+            });
         });
-    });
-    var modelDropdown = $("#model");
-    var modelURL =
-        "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=model&rows=0";
-    $.getJSON(modelURL, function (data) {
-        $.each(data["facet_groups"][0]["facets"], function (index, value) {
-            modelDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
-        });
-    });
-    var fromYearDropdown = $("#from_year");
-    var tillYearDropdown = $("#till_year");
-    var yearURL =
-        "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=year&rows=0";
-    $.getJSON(yearURL, function (data) {
-        $.each(data["facet_groups"][0]["facets"], function (index, value) {
-            fromYearDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
-            tillYearDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
-        });
-    });
 
-    var engineDropdown = $("#engine");
-    var engineURL =
+    const modelDropdown = document.getElementById("model");
+    const modelURL =
+        "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=model&rows=0";
+    fetch(modelURL)
+        .then((response) => response.json())
+        .then((data) => {
+            data["facet_groups"][0]["facets"].forEach(function (value) {
+                const option = document.createElement("option");
+                option.text = value["name"];
+                option.value = value["name"];
+                modelDropdown.add(option);
+            });
+        });
+
+    const fromYearDropdown = document.getElementById("from_year");
+    const tillYearDropdown = document.getElementById("till_year");
+    const yearURL =
+        "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=year&rows=0";
+    fetch(yearURL)
+        .then((response) => response.json())
+        .then((data) => {
+            data["facet_groups"][0]["facets"].forEach(function (value) {
+                const option = document.createElement("option");
+                option.text = value["name"];
+                option.value = value["name"];
+                fromYearDropdown.add(option);
+                tillYearDropdown.add(option.cloneNode(true));
+            });
+        });
+
+    const engineDropdown = document.getElementById("engine");
+    const engineURL =
         "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=eng_dscr&rows=0";
-    $.getJSON(engineURL, function (data) {
-        $.each(data["facet_groups"][0]["facets"], function (index, value) {
-            engineDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
+    fetch(engineURL)
+        .then((response) => response.json())
+        .then((data) => {
+            data["facet_groups"][0]["facets"].forEach(function (value) {
+                const option = document.createElement("option");
+                option.text = value["name"];
+                option.value = value["name"];
+                engineDropdown.add(option);
+            });
         });
-    });
-    var transmissionDropdown = $("#transmission");
-    var transmissionURL =
+
+    const transmissionDropdown = document.getElementById("transmission");
+    const transmissionURL =
         "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=trany&rows=0";
-    $.getJSON(transmissionURL, function (data) {
-        $.each(data["facet_groups"][0]["facets"], function (index, value) {
-            transmissionDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
+    fetch(transmissionURL)
+        .then((response) => response.json())
+        .then((data) => {
+            data["facet_groups"][0]["facets"].forEach(function (value) {
+                const option = document.createElement("option");
+                option.text = value["name"];
+                option.value = value["name"];
+                transmissionDropdown.add(option);
+            });
         });
-    });
-    var cylindersDropdown = $("#cylinders");
-    var cylindersURL =
+
+    const cylindersDropdown = document.getElementById("cylinders");
+    const cylindersURL =
         "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=cylinders&rows=0";
-    $.getJSON(cylindersURL, function (data) {
-        $.each(data["facet_groups"][0]["facets"], function (index, value) {
-            cylindersDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
+    fetch(cylindersURL)
+        .then((response) => response.json())
+        .then((data) => {
+            data["facet_groups"][0]["facets"].forEach(function (value) {
+                const option = document.createElement("option");
+                option.text = value["name"];
+                option.value = value["name"];
+                cylindersDropdown.add(option);
+            });
         });
-    });
-    var driveDropdown = $("#drive");
-    var driveURL =
+
+    const driveDropdown = document.getElementById("drive");
+    const driveURL =
         "https://public.opendatasoft.com/api/records/1.0/search/?dataset=all-vehicles-model&facet=drive&rows=0";
-    $.getJSON(driveURL, function (data) {
-        $.each(data["facet_groups"][0]["facets"], function (index, value) {
-            driveDropdown.append(
-                $("<option>").text(value["name"]).attr("value", value["name"])
-            );
+    fetch(driveURL)
+        .then((response) => response.json())
+        .then((data) => {
+            data["facet_groups"][0]["facets"].forEach(function (value) {
+                const option = document.createElement("option");
+                option.text = value["name"];
+                option.value = value["name"];
+                driveDropdown.add(option);
+            });
         });
-    });
 });

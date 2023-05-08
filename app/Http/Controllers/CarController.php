@@ -156,19 +156,30 @@ return view('cars.show', compact('listings'));
 
         return redirect()->route('cars.view', $car->id);
     }
-    public function listingdestroy($id)
-    {
-        $listing = CarListing::find($id);
+public function listingdestroy($id)
+{
+    $listing = CarListing::find($id);
 
-        // Check if user is authorized to delete listing
-        if (!auth()->check() || auth()->id() !== $listing->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $listing->delete();
-
-        return redirect()->route('cars.myshow')->with('success', 'Listing deleted successfully');
+    // Check if user is authorized to delete listing
+    if (!auth()->check() || (auth()->user()->role_user && auth()->user()->role_user->role_id !== 2 && auth()->id() !== $listing->user_id)) {
+        abort(403, 'Unauthorized action.');
     }
+
+    $listing->delete();
+
+    if (auth()->check() && auth()->user()->role_user && auth()->user()->role_user->role_id === 2) {
+        return redirect()->route('cars.show')->with('success', 'Listing deleted successfully');
+    } else {
+        if ($listing->user_id === auth()->id()) {
+            return redirect()->route('cars.myshow')->with('success', 'Listing deleted successfully');
+        } else {
+            return redirect()->route('cars.show');
+        }
+    }
+}
+
+
+
 
 
 

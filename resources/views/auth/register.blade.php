@@ -71,8 +71,21 @@
                                 <input type="password" class="form-control rounded-3" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
                                 <label for="password_confirmation">Confirm Password</label>
                             </div>
+                            <div class="form-floating mb-3" id="admin-password" style="display:none">
+                                <input type="password" class="form-control rounded-3" id="admin_password" name="admin_password" placeholder="Admin Password">
+                                <label for="admin_password">Admin Password</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-select rounded-3" id="role" name="role" required>
+                                    <option value="">Select Role</option>
+                                    <option value="registered">Registered User</option>
+                                    <option value="admin">Admin User</option>
+                                </select>
+                                <label for="role">Role</label>
+                            </div>
                             <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign up</button>
                         </form>
+                        <script src="/js/register-admin.js"></script>
                     </div>
                 </div>
             </div>

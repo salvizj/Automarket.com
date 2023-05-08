@@ -45,6 +45,7 @@
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
+                    <h4>Current Role: {{ auth()->user()->roles()->pluck('name')->implode(' ') }}</h4>
                     <form method="POST" action="{{ route('profile.update') }}">
                         @csrf
                         @method('PUT')

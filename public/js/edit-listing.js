@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".edit-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
+            document.querySelectorAll(".form-group").forEach(function (input) {
+                input.style.display = "block";
+            });
             document
                 .querySelectorAll(".form-control")
                 .forEach(function (input) {
@@ -27,6 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.querySelectorAll(".save-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
+            document.querySelectorAll(".form-group").forEach(function (input) {
+                input.style.display = "none";
+            });
             document
                 .querySelectorAll(".form-control")
                 .forEach(function (input) {

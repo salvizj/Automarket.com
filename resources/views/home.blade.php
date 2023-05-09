@@ -8,46 +8,59 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
         crossorigin="anonymous">
-    <link href="/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="antialiased ">
     <header>
-        <div class="container ">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start ">
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="/" class="nav-link px-2 text-white active text-decoration-underline">Home</a></li>
-                    <li class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="/cars/show" class="nav-link px-2 text-white">Listings</a></li>
+        <nav class="navbar bg-primary navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Automarket</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/cars/show">Listings</a>
+                        </li>
+                        @if (Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="/cars/myshow">My Listings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/cars/create">Create a Listing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/user/profile">Profile</a>
+                            </li>
+                        @endif
+                    </ul>
                     @if (Auth::check())
-                        <li><a href="/cars/myshow" class="nav-link px-2 text-white">My Listings</a></li>
-                        <li><a href="/cars/create" class="nav-link px-2 text-white">Create a Listing</a></li>
-                        <li><a href="/user/profile" class="nav-link px-2 text-white ">Profile</a></li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-light">Logout</button>
+                        </form>
+                    @else
+                        <a type="button" href="/auth/login" class="btn btn-outline-light">Login</a>
+                        <a type="button" href="/auth/register" class="btn btn-outline-light">Register</a>
                     @endif
-                </ul>
-                </form>
-                @if (Auth::check())
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-light me-2">Logout</button>
-                    </form>
-                @else
-                    <a type="button" href="/auth/login" class="btn btn-outline-light me-2">Login</a>
-                    <a type="button" href="/auth/register" class="btn btn-outline-light me-2">Register</a>
-                @endif
+                </div>
             </div>
-        </div>
-        </div>
+        </nav>
     </header>
-    <main>
+    <main class="d-flex flex-column min-vh-100">
         <div class=" text-center">
             <h1 id="home-page-main">Welcome to Automarket</h1>
             <p class="lead mb-5">Find your perfect car today</p>
             <a href="/cars/show" class="btn btn-primary btn-lg">Listings</a>
         </div>
-        <footer>
-            <div class="container text-center">
-                <span class="text-muted">© 2023 Automarket</span>
+        <footer class="footer mt-auto py-3 bg-light">
+            <div class="container">
+                <span class="text-muted">&copy; 2023 Automarket. All rights reserved.</span>
             </div>
         </footer>
     </main>

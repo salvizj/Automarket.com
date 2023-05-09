@@ -126,10 +126,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     new Option("--Select Transmission--", "")
                 );
                 data["facet_groups"][0]["facets"].forEach(function (value) {
-                    const option = document.createElement("option");
-                    option.value = value["name"];
-                    option.text = value["name"];
-                    transmissionDropdown.appendChild(option);
+                    transmissionDropdown.appendChild(
+                        new Option(value["name"], value["name"])
+                    );
                 });
             });
     });

@@ -73,8 +73,7 @@
                         <h5 class="card-title">Last Name:</h5>
                         <p class="card-text">
                             <span id="last_name">{{ auth()->user()->last_name }}</span>
-                            <input type="text" name="last_name" class="form-control" id="last_name_input" value="{{ auth()->user()->last_name }}" style="display:none;"
-                                autocomplete="last_name>
+                            <input type="text" name="last_name" class="form-control" id="last_name_input" value="{{ auth()->user()->last_name }}" style="display:none;" autocomplete="last_name">
                         </p>
                         <h5 class="card-title">Number:</h5>
                         <p class="card-text">

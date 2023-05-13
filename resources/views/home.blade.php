@@ -49,11 +49,23 @@
                         <a type="button" href="/auth/register" class="btn btn-outline-light">Register</a>
                     @endif
                 </div>
-            </div>
+                <div class="dropdown">
+                    <a class="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ config('app.languages')[$lang] }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <a class="dropdown-item" href="{{ route('lang.switch', 'en') }}?v={{ time() }}">English</a>
+                        <a class="dropdown-item" href="{{ route('lang.switch', 'lv') }}?v={{ time() }}">Latvian</a>
+                    </ul>
+                </div>
+
         </nav>
     </header>
     <main class="d-flex flex-column min-vh-100">
         <div class=" text-center">
+            <h1>{{ __('messages.welcome') }}</h1>
+            <p>Current language: {{ App::getLocale() }}</p>
+
             <h1 id="home-page-main">Welcome to Automarket</h1>
             <p class="lead mb-5">Find your perfect car today</p>
             <a href="/cars/show" class="btn btn-primary btn-lg">Listings</a>

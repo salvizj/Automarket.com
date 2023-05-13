@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web'])->group(function () {
@@ -27,10 +29,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/profile', [UserController::class, 'show'])->name('profile.show');
         Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
     });
-
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/{lang}', [HomeController::class, 'index'])->name('home.lang');
+Route::get('/lang/{lang}', [HomeController::class, 'switchLanguage'])->name('lang.switch');
 
     Route::get('/user/profile', function () {
         return view('user.profile');
@@ -44,4 +45,5 @@ Route::middleware(['web'])->group(function () {
     Route::put('/cars/view/{id}', [CarController::class, 'update'])->name('cars.update');
     Route::post('/cars/show', [CarController::class, 'filter'])->name('car.filter');
     Route::delete('/cars/{id}', [CarController::class, 'listingdestroy'])->name('cars.listingdestroy');
+
 });

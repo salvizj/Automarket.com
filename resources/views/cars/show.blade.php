@@ -9,117 +9,130 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
         crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/js/filter-car-data.js"></script>
 </head>
 
-<body class="antialiased ">
+<body class="antialiased">
     <header>
         <nav class="navbar bg-primary navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">Automarket</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="/">{{ __('messages.automarket') }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="{{ __('messages.toggle_navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
+                            <a class="nav-link" href="/">{{ __('messages.home') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/cars/show">Listings</a>
+                            <a class="nav-link" href="/cars/show">{{ __('messages.listings') }}</a>
                         </li>
                         @if (Auth::check())
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/myshow">My Listings</a>
+                                <a class="nav-link" href="/cars/myshow">{{ __('messages.my_listings') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/create">Create a Listing</a>
+                                <a class="nav-link" href="/cars/create">{{ __('messages.create_listing') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/profile">Profile</a>
+                                <a class="nav-link" href="/user/profile">{{ __('messages.profile') }}</a>
                             </li>
                         @endif
                     </ul>
                     @if (Auth::check())
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="btn btn-outline-light">Logout</button>
+                            <button type="submit" class="btn btn-outline-light">{{ __('messages.logout') }}</button>
                         </form>
                     @else
-                        <a type="button" href="/auth/login" class="btn btn-outline-light ">Login</a>
-                        <a type="button" href="/auth/register" class="btn btn-outline-light">Register</a>
+                        <a type="button" href="/auth/login" class="btn btn-outline-light">{{ __('messages.login') }}</a>
+                        <a type="button" href="/auth/register" class="btn btn-outline-light">{{ __('messages.register') }}</a>
                     @endif
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            @if (App::getLocale() == 'en')
+                                {{ __('messages.english') }}
+                            @elseif(App::getLocale() == 'lv')
+                                {{ __('messages.latvian') }}
+                            @endif
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'en']) }}">{{ __('messages.english') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'lv']) }}">{{ __('messages.latvian') }}</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
     <main class="d-flex flex-column min-vh-100">
-        <div class="container ">
-            <h3 class="text-center mb-4">Filter Listings</h3>
+        <div class="container">
+            <h3 class="text-center mb-4">{{ __('messages.filter_listings') }}</h3>
             <form method="POST" action="{{ route('car.filter') }}">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col-md-3 mb-3">
-                        <label for="make">Make:</label>
+                        <label for="make">{{ __('messages.make') }}:</label>
                         <select class="form-control" id="make" name="make">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label for="model">Model:</label>
+                        <label for="model">{{ __('messages.model') }}:</label>
                         <select class="form-control" id="model" name="model">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="from_year">From Y:</label>
+                        <label for="from_year">{{ __('messages.from_year') }}:</label>
                         <select class="form-control" id="from_year" name="from_year">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="till_year">Till Y:</label>
+                        <label for="till_year">{{ __('messages.till_year') }}:</label>
                         <select class="form-control" id="till_year" name="till_year">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="engine">Engine:</label>
+                        <label for="engine">{{ __('messages.engine') }}:</label>
                         <select class="form-control" id="engine" name="engine">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="transmission">Transmission:</label>
+                        <label for="transmission">{{ __('messages.transmission') }}:</label>
                         <select class="form-control" id="transmission" name="transmission">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="cylinders">Cylinders:</label>
+                        <label for="cylinders">{{ __('messages.cylinders') }}:</label>
                         <select class="form-control" id="cylinders" name="cylinders">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="drive">Drive type:</label>
+                        <label for="drive">{{ __('messages.drive_type') }}:</label>
                         <select class="form-control" id="drive" name="drive">
                             <option value=""></option>
                         </select>
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="price_min">Price Min:</label>
+                        <label for="price_min">{{ __('messages.price_min') }}:</label>
                         <input type="number" step="100" class="form-control" id="price_min" name="price_min">
                     </div>
                     <div class="col-md-2 mb-3">
-                        <label for="price_max">Price Max:</label>
+                        <label for="price_max">{{ __('messages.price_max') }}:</label>
                         <input type="number" step="100" class="form-control" id="price_max" name="price_max">
                     </div>
                 </div>
                 <div class="row justify-content-end">
                     <div class="col-md-3 text-right">
-                        <button type="submit" class="btn btn-primary mr-2">Filter</button>
-                        <a href="{{ route('cars.show') }}" class="btn btn-secondary">Clear Filter</a>
+                        <button type="submit" class="btn btn-primary mr-2">{{ __('messages.filter') }}</button>
+                        <a href="{{ route('cars.show') }}" class="btn btn-secondary">{{ __('messages.clear_filter') }}</a>
                     </div>
                 </div>
             </form>
@@ -129,23 +142,23 @@
             <div class="row">
                 <div class="col-md-12 mx-auto">
                     @if ($listings != null && $listings->count() > 0)
-                        <h1 class="mb-4">ALL Listings</h1>
+                        <h1 class="mb-4">{{ __('messages.all_listings') }}</h1>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Make</th>
-                                        <th>Model</th>
-                                        <th>Year</th>
-                                        <th>Engine</th>
-                                        <th>Transmission</th>
-                                        <th>Cylinders</th>
-                                        <th>Drive type</th>
-                                        <th>Distance km</th>
-                                        <th>Price &euro;</th>
-                                        <th>Views</th>
-                                        <th>Actions</th>
+                                        <th>{{ __('messages.image') }}</th>
+                                        <th>{{ __('messages.make') }}</th>
+                                        <th>{{ __('messages.model') }}</th>
+                                        <th>{{ __('messages.year') }}</th>
+                                        <th>{{ __('messages.engine') }}</th>
+                                        <th>{{ __('messages.transmission') }}</th>
+                                        <th>{{ __('messages.cylinders') }}</th>
+                                        <th>{{ __('messages.drive_type') }}</th>
+                                        <th>{{ __('messages.distance_km') }}</th>
+                                        <th>{{ __('messages.price_eur') }}</th>
+                                        <th>{{ __('messages.views') }}</th>
+                                        <th>{{ __('messages.actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -154,9 +167,9 @@
                                             <tr>
                                                 <td>
                                                     @if ($listing->image)
-                                                        <img src="{{ asset('storage/car_images/' . $listing->image) }}" alt="Car Image" style="max-width: 100px">
+                                                        <img src="{{ asset('storage/car_images/' . $listing->image) }}" alt="{{ __('messages.car_image') }}" style="max-width: 100px">
                                                     @else
-                                                        <img src="{{ asset('storage\car_images\default.png') }}" alt="Car Image" style="max-width: 100px">
+                                                        <img src="{{ asset('storage\car_images\default.png') }}" alt="{{ __('messages.car_image') }}" style="max-width: 100px">
                                                     @endif
                                                 </td>
                                                 <td>{{ $listing->make }}</td>
@@ -171,13 +184,13 @@
                                                 <td>{{ $listing->view_count }}</td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <a href="{{ route('cars.view', $listing->id) }}" class="btn btn-primary m-1 rounded">View</a>
+                                                        <a href="{{ route('cars.view', $listing->id) }}" class="btn btn-primary m-1 rounded">{{ __('messages.view') }}</a>
                                                         @if (Auth::check() &&
                                                                 Auth::user()->roles()->where('name', 'admin')->exists())
                                                             <form action="{{ route('cars.listingdestroy', $listing->id) }}" method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button id="deleteForm" class="btn btn-danger m-1  rounded" type="submit">Delete</button>
+                                                                <button id="deleteForm" class="btn btn-danger m-1  rounded" type="submit">{{ __('messages.delete') }}</button>
                                                             </form>
                                                         @endif
                                                     </div>
@@ -189,16 +202,11 @@
                             </table>
                         </div>
                     @else
-                        <p>No listings found.</p>
+                        <p>{{ __('messages.no_listings_found') }}</p>
                     @endif
                 </div>
             </div>
         </div>
-        <footer class="footer mt-auto py-3 bg-light">
-            <div class="container">
-                <span class="text-muted">&copy; 2023 Automarket. All rights reserved.</span>
-            </div>
-        </footer>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous">
     </script>

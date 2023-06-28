@@ -15,39 +15,53 @@
     <header>
         <nav class="navbar bg-primary navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">Automarket</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="/">{{ __('messages.automarket') }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="{{ __('messages.toggle_navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
+                            <a class="nav-link" href="/">{{ __('messages.home') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/cars/show">Listings</a>
+                            <a class="nav-link" href="/cars/show">{{ __('messages.listings') }}</a>
                         </li>
                         @if (Auth::check())
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/myshow">My Listings</a>
+                                <a class="nav-link" href="/cars/myshow">{{ __('messages.my_listings') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/create">Create a Listing</a>
+                                <a class="nav-link" href="/cars/create">{{ __('messages.create_listing') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/profile">Profile</a>
+                                <a class="nav-link" href="/user/profile">{{ __('messages.profile') }}</a>
                             </li>
                         @endif
                     </ul>
                     @if (Auth::check())
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="btn btn-outline-light">Logout</button>
+                            <button type="submit" class="btn btn-outline-light">{{ __('messages.logout') }}</button>
                         </form>
                     @else
-                        <a type="button" href="/auth/login" class="btn btn-outline-light ">Login</a>
-                        <a type="button" href="/auth/register" class="btn btn-outline-light">Register</a>
+                        <a type="button" href="/auth/login" class="btn btn-outline-light">{{ __('messages.login') }}</a>
+                        <a type="button" href="/auth/register" class="btn btn-outline-light">{{ __('messages.register') }}</a>
                     @endif
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if (App::getLocale() == 'en')
+                            {{ __('messages.english') }}
+                        @elseif(App::getLocale() == 'lv')
+                            {{ __('messages.latvian') }}
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'en']) }}">{{ __('messages.english') }}</a></li>
+                        <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'lv']) }}">{{ __('messages.latvian') }}</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -58,81 +72,77 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <h1 class="text-center">Create your car listing</h1>
+                            <h1 class="text-center">{{ __('messages.create_listing_title') }}</h1>
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('cars.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="make">Make</label>
+                                    <label for="make">{{ __('messages.make') }}</label>
                                     <select class="form-control" id="make" name="make" required>
-                                        <option value="">Select a make</option>
+                                        <option value="">{{ __('messages.select_make') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="model">Model</label>
+                                    <label for="model">{{ __('messages.model') }}</label>
                                     <select class="form-control" id="model" name="model" required>
-                                        <option value="">Select a model</option>
+                                        <option value="">{{ __('messages.select_model') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="year">Year</label>
+                                    <label for="year">{{ __('messages.year') }}</label>
                                     <select class="form-control" id="year" name="year" required>
-                                        <option value="">Select a year</option>
+                                        <option value="">{{ __('messages.select_year') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="engine">Engine</label>
+                                    <label for="engine">{{ __('messages.engine') }}</label>
                                     <select class="form-control" id="engine" name="engine" required>
-                                        <option value="">Select engine</option>
+                                        <option value="">{{ __('messages.select_engine') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="transmission">Transmission</label>
+                                    <label for="transmission">{{ __('messages.transmission') }}</label>
                                     <select class="form-control" id="transmission" name="transmission" required>
-                                        <option value="">Select a transmission type</option>
+                                        <option value="">{{ __('messages.select_transmission') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="cylinders">Cylinders</label>
+                                    <label for="cylinders">{{ __('messages.cylinders') }}</label>
                                     <select class="form-control" id="cylinders" name="cylinders" required>
-                                        <option value="">Select number of cylinders</option>
+                                        <option value="">{{ __('messages.select_cylinders') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="drive">Drive type</label>
+                                    <label for="drive">{{ __('messages.drive_type') }}</label>
                                     <select class="form-control" id="drive" name="drive" required>
-                                        <option value="">Select a drive type</option>
+                                        <option value="">{{ __('messages.select_drive_type') }}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="distance">Driven Distance (km)</label>
+                                    <label for="distance">{{ __('messages.driven_distance') }} (km)</label>
                                     <input type="number" class="form-control" id="distance" name="distance" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Price ($)</label>
+                                    <label for="price">{{ __('messages.price') }} ($)</label>
                                     <input type="number" class="form-control" id="price" name="price" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="comments">Additional Comments (Optional)</label>
+                                    <label for="comments">{{ __('messages.additional_comments') }} ({{ __('messages.optional') }})</label>
                                     <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="image">Upload Image (Optional)</label>
+                                    <label for="image">{{ __('messages.upload_image') }} ({{ __('messages.optional') }})</label>
                                     <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-block">Submit a listing</button>
+                                <button type="submit" class="btn btn-primary btn-block">{{ __('messages.submit_listing') }}</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="footer mt-auto py-3 bg-light">
-            <div class="container">
-                <span class="text-muted">&copy; 2023 Automarket. All rights reserved.</span>
-            </div>
-        </footer>
+
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous">
     </script>

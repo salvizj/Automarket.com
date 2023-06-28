@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body class="antialiased ">
+<body class="antialiased">
     <header>
         <nav class="navbar bg-primary navbar-expand-lg navbar-dark">
             <div class="container-fluid">
@@ -22,59 +22,55 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
+                            <a class="nav-link" href="/">{{ __('messages.home') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/cars/show">Listings</a>
+                            <a class="nav-link" href="/cars/show">{{ __('messages.listings') }}</a>
                         </li>
                         @if (Auth::check())
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/myshow">My Listings</a>
+                                <a class="nav-link" href="/cars/myshow">{{ __('messages.my_listings') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/create">Create a Listing</a>
+                                <a class="nav-link" href="/cars/create">{{ __('messages.create_listing') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/profile">Profile</a>
+                                <a class="nav-link" href="/user/profile">{{ __('messages.profile') }}</a>
                             </li>
                         @endif
                     </ul>
                     @if (Auth::check())
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="btn btn-outline-light">Logout</button>
+                            <button type="submit" class="btn btn-outline-light">{{ __('messages.logout') }}</button>
                         </form>
                     @else
-                        <a type="button" href="/auth/login" class="btn btn-outline-light">Login</a>
-                        <a type="button" href="/auth/register" class="btn btn-outline-light">Register</a>
+                        <a type="button" href="/auth/login" class="btn btn-outline-light ">{{ __('messages.login') }}</a>
+                        <a type="button" href="/auth/register" class="btn btn-outline-light">{{ __('messages.register') }}</a>
                     @endif
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            @if (App::getLocale() == 'en')
+                                {{ __('messages.english') }}
+                            @elseif(App::getLocale() == 'lv')
+                                {{ __('messages.latvian') }}
+                            @endif
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'en']) }}">{{ __('messages.english') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'lv']) }}">{{ __('messages.latvian') }}</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="dropdown">
-                    <a class="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ config('app.languages')[$lang] }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                        <a class="dropdown-item" href="{{ route('lang.switch', 'en') }}?v={{ time() }}">English</a>
-                        <a class="dropdown-item" href="{{ route('lang.switch', 'lv') }}?v={{ time() }}">Latvian</a>
-                    </ul>
-                </div>
-
+            </div>
         </nav>
     </header>
     <main class="d-flex flex-column min-vh-100">
         <div class=" text-center">
-            <h1>{{ __('messages.welcome') }}</h1>
-            <p>Current language: {{ App::getLocale() }}</p>
-
-            <h1 id="home-page-main">Welcome to Automarket</h1>
-            <p class="lead mb-5">Find your perfect car today</p>
-            <a href="/cars/show" class="btn btn-primary btn-lg">Listings</a>
+            <h1 id="home-page-main">{{ __('messages.welcome') }}</h1>
+            <p class="lead mb-5">{{ __('messages.find_car') }}</p>
+            <a href="/cars/show" class="btn btn-primary btn-lg">{{ __('messages.listings') }}</a>
         </div>
-        <footer class="footer mt-auto py-3 bg-light">
-            <div class="container">
-                <span class="text-muted">&copy; 2023 Automarket. All rights reserved.</span>
-            </div>
-        </footer>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous">
     </script>

@@ -21,32 +21,45 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
+                            <a class="nav-link" href="/">{{ __('messages.home') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/cars/show">Listings</a>
+                            <a class="nav-link" href="/cars/show">{{ __('messages.listings') }}</a>
                         </li>
                         @if (Auth::check())
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/myshow">My Listings</a>
+                                <a class="nav-link" href="/cars/myshow">{{ __('messages.my_listings') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/cars/create">Create a Listing</a>
+                                <a class="nav-link" href="/cars/create">{{ __('messages.create_listing') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/profile">Profile</a>
+                                <a class="nav-link" href="/user/profile">{{ __('messages.profile') }}</a>
                             </li>
                         @endif
                     </ul>
                     @if (Auth::check())
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="btn btn-outline-light">Logout</button>
+                            <button type="submit" class="btn btn-outline-light">{{ __('messages.logout') }}</button>
                         </form>
                     @else
-                        <a type="button" href="/auth/login" class="btn btn-outline-light ">Login</a>
-                        <a type="button" href="/auth/register" class="btn btn-outline-light">Register</a>
+                        <a type="button" href="/auth/login" class="btn btn-outline-light ">{{ __('messages.login') }}</a>
+                        <a type="button" href="/auth/register" class="btn btn-outline-light">{{ __('messages.register') }}</a>
                     @endif
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if (App::getLocale() == 'en')
+                            {{ __('messages.english') }}
+                        @elseif(App::getLocale() == 'lv')
+                            {{ __('messages.latvian') }}
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'en']) }}">{{ __('messages.english') }}</a></li>
+                        <li><a class="dropdown-item" href="{{ route('change.language', ['lang' => 'lv']) }}">{{ __('messages.latvian') }}</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -56,30 +69,26 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content rounded-4 shadow">
                     <div class="modal-header p-5 pb-4 border-bottom-0">
-                        <h1 class="fw-bold mb-0 fs-2">Login</h1>
+                        <h1 class="fw-bold mb-0 fs-2">{{ __('messages.login') }}</h1>
                     </div>
                     <div class="modal-body p-5 pt-0">
                         <form method="POST" action="/login">
                             @csrf
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control rounded-3" id="email" name="email" placeholder="Email address" required>
-                                <label for="email">Email address</label>
+                                <input type="email" class="form-control rounded-3" id="email" name="email" placeholder="{{ __('messages.email_address') }}" required>
+                                <label for="email">{{ __('messages.email') }}</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control rounded-3" id="password" name="password" placeholder="Password" required>
-                                <label for="password">Password</label>
+                                <input type="password" class="form-control rounded-3" id="password" name="password" placeholder="{{ __('messages.password') }}" required>
+                                <label for="password">{{ __('messages.password') }}</label>
                             </div>
-                            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Login</button>
+                            <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">{{ __('messages.login') }}</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="footer mt-auto py-3 bg-light">
-            <div class="container">
-                <span class="text-muted">&copy; 2023 Automarket. All rights reserved.</span>
-            </div>
-        </footer>
+
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous">
     </script>

@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarController;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -29,10 +28,7 @@ Route::middleware(['web'])->group(function () {
         Route::get('/profile', [UserController::class, 'show'])->name('profile.show');
         Route::put('/profile', [UserController::class, 'updateProfile'])->name('profile.update');
     });
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/{lang}', [HomeController::class, 'index'])->name('home.lang');
-Route::get('/lang/{lang}', [HomeController::class, 'switchLanguage'])->name('lang.switch');
-
+Route::view('/', 'home')->name('home');
     Route::get('/user/profile', function () {
         return view('user.profile');
     });
@@ -45,5 +41,12 @@ Route::get('/lang/{lang}', [HomeController::class, 'switchLanguage'])->name('lan
     Route::put('/cars/view/{id}', [CarController::class, 'update'])->name('cars.update');
     Route::post('/cars/show', [CarController::class, 'filter'])->name('car.filter');
     Route::delete('/cars/{id}', [CarController::class, 'listingdestroy'])->name('cars.listingdestroy');
+
+Route::view('/', 'home')->name('home');
+
+Route::get('lang/{lang}', function ($lang) {
+    session()->put('lang', $lang);
+    return back();
+})->name('change.language');
 
 });

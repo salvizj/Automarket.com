@@ -78,14 +78,15 @@ public function updateProfile(Request $request)
 {
     $user = Auth::user();
 
-    $validatedData = $request->validate([
-        'first_name' => ['required', 'string', 'max:255'],
-        'last_name' => ['required', 'string', 'max:255'],
-        'number' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-        'password' => ['nullable', 'string', 'min:8'],
-        'new_password' => ['nullable', 'string', 'min:8'],
-    ]);
+$validatedData = $request->validate([
+    'first_name' => ['required', 'string', 'regex:/^[a-zA-Z]{3,}$/u', 'max:255'],
+    'last_name' => ['required', 'string', 'regex:/^[a-zA-Z]{3,}$/u', 'max:255'],
+    'number' => ['required', 'string', 'regex:/^\d{8}$/', 'max:255'],
+    'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+    'password' => ['nullable', 'string', 'min:8'],
+    'new_password' => ['nullable', 'string', 'min:8'],
+]);
+
 
     $user = User::find($user->id);
 
@@ -97,7 +98,7 @@ public function updateProfile(Request $request)
 
     $user->fill($validatedData)->save();
 
-    return redirect()->back()->with('success', 'Profile updated successfully!');
+return redirect()->back()->with('success', __('messages.profile_updated_successfully'));
 }
 
 

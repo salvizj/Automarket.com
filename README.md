@@ -1,6 +1,6 @@
 <h1>Autosales-Web-page</h1>
 
-Welcome to Autosales-Web-page! This is an online automarketplace where users can create car listings, view other people's listings, and search for specific cars using filters. The application is built using Laravel, MySQL, JavaScript, and PHP.
+Welcome to Autosales-Web-page! This is an online automarketplace where users can create car listings, view other people's listings, and search for specific cars using filters. The application is built using Laravel, MySQL, JavaScript, PHP and Bootstrap.
 
 <h2>Features</h2>
 
@@ -17,3 +17,4 @@ Welcome to Autosales-Web-page! This is an online automarketplace where users can
 <p>- MySQL: A popular open-source relational database management system.</p>
 <p>- JavaScript: A programming language used for client-side functionality.</p>
 <p>- PHP: A server-side scripting language for web development.</p>
+<p>- Bootstrap: Bootstrap clases for style</p>
